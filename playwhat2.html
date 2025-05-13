@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Play What 2.1</title>
+	<style>
+		body {
+			text-align: center;
+			font-family: 微软雅黑,"Microsoft YaHei";
+			min-width: 32em;
+		}
+		input {
+			text-align: center;
+		}
+		
+		#tb1 input {
+			width: 75%;
+		}
+		#tb1 td {
+			width: 6em;
+			border: 1px soild black;
+		}
+		
+		/* Chrome, Safari, Edge, Opera */
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		/* Firefox */
+		input[type=number] {
+			-moz-appearance: textfield;
+		}
+	</style>
+</head>
+<body>
+<input id='nu' type='number' value="">
+
+<input id='go' type='button' value="go" tabindex="1">
+
+<input id='up' type='button' value="up">
+
+<input id='au' type='checkbox' value="">
+
+<br><br>
+<table id='tb1' style="margin: auto;"><tbody>
+	<tr>
+		<td>最大值<br>MAX</td><td id="MAX_data">N/A</td>
+		<td>中位数<br>MID</td><td id="MID_data">N/A</td>
+		<td>均方根<br>RMS</td><td><div id="RMS_data"></div><input id='RMS_in' type='number' value=""></td>
+		<td>方　差<br>DV</td><td><div id="DV_data"></div><input id='DV_in' type='number' value=""></td>
+	</tr>
+	<tr>
+		<td>最小值<br>MIN</td><td id="MIN_data">N/A</td>
+		<td>平均值<br>AVG</td><td id="AVG_data">N/A</td>
+		<td>中绝差<br>MAD</td><td><div id="MAD_data"></div><input id='MAD_in' type='number' value=""></td>
+		<td>标准差<br>SD</td><td><div id="SD_data"></div><input id='SD_in' type='number' value=""></td>
+	</tr>
+	<tr>
+		<td>重试数<br>RT</td><td><div id="RT_data"></div><input id='RT_in' type='number' value=""></td>
+		<td>毫　秒<br>TM</td><td><div id="TM_data"></div><input id='TM_in' type='number' value=""></td>
+	</tr>
+</tbody></table>
+<div id='st'></div>
+<div id='rp'></div>
+<div id='pt'></div>
+<br><br>
+<table id='tb2' style="margin: auto; border-spacing:0;"><tbody></tbody></table>
+<script src="srp/jquery-3.7.1.min.js"></script>
+<script src="srp/math.js"></script>
+<script src="srp/playwhat2.js"></script>
+<script>
+$('#go').click();
+</script>
+</body>
+</html>

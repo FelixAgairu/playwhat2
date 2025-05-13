@@ -1,0 +1,204 @@
+document.getElementById("go").focus();
+$('#go').on('click', function (){
+var playwhat = new oPlayWhat();
+	playwhat.fStart();
+	$('#up').on('click','',playwhat , function(eee) {
+			$('#RMS_in').val(eee.data.iRound / eee.data.oGame.length * 1.1);
+			$('#DV_in').val(eee.data.iRound);
+			$('#MAD_in').val(eee.data.iRound / eee.data.oGame.length);
+			$('#SD_in').val(eee.data.iRound / eee.data.oGame.length);
+	});
+
+	$('#nu').on('blur','',playwhat , function(eee) {
+		if ($('#au')[0].checked) {
+			$('#RMS_in').val(eee.data.iRound / eee.data.oGame.length * 1.1);
+			$('#DV_in').val(eee.data.iRound);
+			$('#MAD_in').val(eee.data.iRound / eee.data.oGame.length);
+			$('#SD_in').val(eee.data.iRound / eee.data.oGame.length);
+		}
+	});
+
+});
+
+
+function oPlayWhat() {
+	this.oGame = [
+		{name:"国家崛起<br>Rise of Nations", counts:0, xxxx:"rons"},
+		{name:"中世纪国<br>Medieval Dynasty", counts:0, xxxx:"medd"},
+		{name:"纪元1800<br>ANNO 1800", counts:0, xxxx:"an18"},
+		{name:"战争雷霆<br>War Thunder", counts:0, xxxx:"wart"},
+		{name:"落日余晖<br>Farlight 84", counts:0, xxxx:"fl84"},
+		{name:"饥荒联机<br>Don't Starve Together", counts:0, xxxx:"dtst"},
+		{name:"小羊肖恩<br>Home Sheep Home", counts:0, xxxx:"home"},
+		{name:"我的世界<br>Minecraft", counts:0, xxxx:"mine"},
+		{name:"虚实之间<br>SYNTHETIK", counts:0, xxxx:"synt"},
+		{name:"无人深空<br>No Man's Sky", counts:0, xxxx:"nmsk"},
+		{name:"绝地求生<br>PUBG:BATTLEGROUND", counts:0, xxxx:"pubg"},
+		{name:"异星探险<br>ASTRONEER", counts:0, xxxx:"astr"},
+		{name:"幸福工厂<br>Satisfactory", counts:0, xxxx:"sati"},
+		{name:"堡垒之夜<br>Fortnite", counts:0, xxxx:"fort"},
+		{name:"王国重生<br>Kingdoms Rebron", counts:0, xxxx:"king"},
+		{name:"潜行者γ<br>S.T.A.L.K.E.R. GAMMA", counts:0, xxxx:"gamm"},
+		{name:"灰区战争<br>GRAY ZONE WARFARE", counts:0, xxxx:"gray"},
+		{name:"战舰世界<br>World of Warships", counts:0, xxxx:"wows"},
+		{name:"坦克世界<br>World of Tanks", counts:0, xxxx:"wotk"}
+	];
+	this.oGameCount = this.oGame.length;
+	this.iTheMaxCount = 0;
+	this.iTheMaxIndex = "";
+	this.aTmp = new Array();
+	this.iRT = -1;
+	this.fRunTimes = performance.now();
+	
+
+		if ($('#nu').val() == '' || $('#nu').val() < 1) {
+			this.iRound = (this.oGame.length * 10000);
+			$('#nu').val(this.iRound);
+		}
+		else {
+			this.iRound = $('#nu').val();
+		}
+		
+		if ($('#TM_in').val() == '' || $('#TM_in').val() < 1) {
+			this.iInTM = 10000;
+			$('#TM_in').val(this.iInTM);
+		}
+		else {
+			this.iInTM = $('#TM_in').val();
+		}
+		
+		if ($('#RMS_in').val() == '' || $('#RMS_in').val() < 1) {
+			this.iInRMS = this.iRound / this.oGame.length * 1.1;
+			$('#RMS_in').val(this.iInRMS);
+		}
+		else {
+			this.iInRMS = $('#RMS_in').val();
+		}
+		
+		if ($('#DV_in').val() == '' || $('#DV_in').val() < 1) {
+			this.iInDV = this.iRound;
+			$('#DV_in').val(this.iInDV);
+		}
+		else {
+			this.iInDV = $('#DV_in').val();
+		}
+		
+		if ($('#MAD_in').val() == '' || $('#MAD_in').val() < 1) {
+			this.iInMAD = this.iRound / this.oGame.length;
+			$('#MAD_in').val(this.iInMAD);
+
+		}
+		else {
+			this.iInMAD = $('#MAD_in').val();
+		}
+		
+		if ($('#SD_in').val() == '' || $('#SD_in').val() < 1) {
+			this.iInSD = this.iRound / this.oGame.length;
+			$('#SD_in').val(this.iInSD);
+		}
+		else {
+			this.iInSD = $('#SD_in').val();
+		}
+		
+		if ($('#RT_in').val() == '' || $('#RT_in').val() < 0) {
+			this.iInRT = 5000;
+			$('#RT_in').val(this.iInRT);
+		}
+		else {
+			this.iInRT = $('#RT_in').val();
+		}
+	
+	this.fRMS =	 function () {
+				var iii = 0;
+				this.aTmp.forEach((num) => {
+					iii += num * num;
+				});
+				iii = math.sqrt(iii / (this.oGameCount));
+				return iii;
+	}
+	
+	this.fOutput = function () {
+		this.oGame.sort(function(a, b){return b.counts - a.counts});
+		
+		$("#tb2").empty();
+		for (var k = 0; k < this.oGameCount; k = k + 1) {
+			$("#tb2").append("<tr><td><img alt=\"" +
+			this.oGame[k].xxxx + "\" src=\"img/" +
+			this.oGame[k].xxxx + ".png\"></img></td><td><h1>" +
+			this.oGame[k].name + "</h1></td><td><h2></h2></td></tr>");
+		}
+		
+		$('#tb2 tr').css("background-color", 'lightgrey');
+	
+		for (var j = 0; j < this.oGameCount; j = j + 1) {
+			if(this.oGame[j].counts > this.iTheMaxCount) {
+				this.iTheMaxCount = this.oGame[j].counts;
+				this.iTheMaxIndex = j;
+			}
+
+			$($("#tb2 h2")[j]).html(this.oGame[j].counts);
+			$('#tb2 td:nth-child(2)').css("width", '30em');
+		}
+		
+		$('#tb2 tr:nth-child(1)').css("background-color", 'lightcyan');
+		
+		$('#MAX_data').html(Math.round((math.max(this.aTmp)*100))/100);
+		$('#MID_data').html(Math.round((math.median(this.aTmp)*100))/100);
+		$('#RMS_data').html(Math.round((this.fRMS()*100))/100);
+		$('#DV_data').html(Math.round((math.variance(this.aTmp)*100))/100);
+		$('#MIN_data').html(Math.round((math.min(this.aTmp)*100))/100);
+		$('#AVG_data').html(Math.round((math.mean(this.aTmp)*100))/100);
+		$('#MAD_data').html(Math.round((math.mad(this.aTmp)*100))/100);
+		$('#SD_data').html(Math.round((math.std(this.aTmp)*100))/100);
+		
+		for (var i = 0; i < $('#tb1 div').length; i++) {
+			if(parseFloat($($('#tb1 div')[i]).html()) < parseFloat($($('#tb1 input')[i]).val())) {
+				$($('#tb1 div')[i]).css('color', 'green');
+				$($('#tb1 input')[i]).css('color', 'green');
+			}
+			else {
+				$($('#tb1 div')[i]).css('color', 'black');
+				$($('#tb1 input')[i]).css('color', 'black');
+			}
+		}
+		return 0;
+	}
+	
+	this.fSTD = function () {
+		// Empty Array
+		for (var ii = 0; ii < this.oGameCount; ii++) {this.aTmp[ii] = 0;}
+		do {
+			// Random
+			for (var i = 0; i < this.iRound; i++) {
+				this.aTmp[Math.floor(Math.random() * this.oGameCount)] += 1;
+
+				if(performance.now() - this.fRunTimes > this.iInTM){break;}
+			}
+			this.iRT += 1;
+			
+			if(this.iRT > this.iInRT - 1){break;}
+		} while (
+			this.fRMS() > this.iInRMS ||
+			math.variance(this.aTmp) > this.iInDV ||
+			math.mad(this.aTmp) > this.iInAD ||
+			math.std(this.aTmp) > this.iInSD
+		)
+		
+		for (var r = 0; r < this.oGameCount; r = r + 1) {
+			this.oGame[r].counts = this.aTmp[r];
+		}
+		
+		$('#RT_data').html(this.iRT);
+		
+		return 0;
+	}
+	
+	this.fStart = function () {
+		this.fSTD();
+		this.fOutput();
+		
+		$('#TM_data').html(Math.round((performance.now() - this.fRunTimes) * 100) / 100);
+		
+		return 0;
+	}
+}
