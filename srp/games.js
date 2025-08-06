@@ -1,0 +1,22 @@
+const oGamesData = [
+		{name:"ＧＴＡ５<br>Grand Theft Auto V", counts:0, xxxx:"gtav"},
+		{name:"国家崛起<br>Rise of Nations", counts:0, xxxx:"rons"},
+		{name:"中世纪国<br>Medieval Dynasty", counts:0, xxxx:"medd"},
+		{name:"纪元1800<br>ANNO 1800", counts:0, xxxx:"an18"},
+		{name:"战争雷霆<br>War Thunder", counts:0, xxxx:"wart"},
+		{name:"落日余晖<br>Farlight 84", counts:0, xxxx:"fl84"},
+		{name:"饥荒联机<br>Don't Starve Together", counts:0, xxxx:"dtst"},
+		{name:"小羊肖恩<br>Home Sheep Home", counts:0, xxxx:"home"},
+		{name:"我的世界<br>Minecraft", counts:0, xxxx:"mine"},
+		{name:"虚实之间<br>SYNTHETIK", counts:0, xxxx:"synt"},
+		{name:"无人深空<br>No Man's Sky", counts:0, xxxx:"nmsk"},
+		{name:"绝地求生<br>PUBG:BATTLEGROUND", counts:0, xxxx:"pubg"},
+		{name:"异星探险<br>ASTRONEER", counts:0, xxxx:"astr"},
+		{name:"幸福工厂<br>Satisfactory", counts:0, xxxx:"sati"},
+		{name:"堡垒之夜<br>Fortnite", counts:0, xxxx:"fort"},
+		{name:"王国重生<br>Kingdoms Rebron", counts:0, xxxx:"king"},
+		{name:"潜行者γ<br>S.T.A.L.K.E.R. GAMMA", counts:0, xxxx:"gamm"},
+		{name:"灰区战争<br>GRAY ZONE WARFARE", counts:0, xxxx:"gray"},
+		{name:"战舰世界<br>World of Warships", counts:0, xxxx:"wows"},
+		{name:"坦克世界<br>World of Tanks", counts:0, xxxx:"wotk"}
+];

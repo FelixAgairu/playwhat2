@@ -1,58 +1,23 @@
-document.getElementById("go").focus();
-$('#go').on('click', function (){
-var playwhat = new oPlayWhat();
-	playwhat.fStart();
-	$('#up').on('click','',playwhat , function(eee) {
-			$('#RMS_in').val(eee.data.iRound / eee.data.oGame.length * 1.1);
-			$('#DV_in').val(eee.data.iRound);
-			$('#MAD_in').val(eee.data.iRound / eee.data.oGame.length);
-			$('#SD_in').val(eee.data.iRound / eee.data.oGame.length);
-	});
-
-	$('#nu').on('blur','',playwhat , function(eee) {
-		if ($('#au')[0].checked) {
-			$('#RMS_in').val(eee.data.iRound / eee.data.oGame.length * 1.1);
-			$('#DV_in').val(eee.data.iRound);
-			$('#MAD_in').val(eee.data.iRound / eee.data.oGame.length);
-			$('#SD_in').val(eee.data.iRound / eee.data.oGame.length);
-		}
-	});
-
-});
-
-
-function oPlayWhat() {
-	this.oGame = [
-		{name:"国家崛起<br>Rise of Nations", counts:0, xxxx:"rons"},
-		{name:"中世纪国<br>Medieval Dynasty", counts:0, xxxx:"medd"},
-		{name:"纪元1800<br>ANNO 1800", counts:0, xxxx:"an18"},
-		{name:"战争雷霆<br>War Thunder", counts:0, xxxx:"wart"},
-		{name:"落日余晖<br>Farlight 84", counts:0, xxxx:"fl84"},
-		{name:"饥荒联机<br>Don't Starve Together", counts:0, xxxx:"dtst"},
-		{name:"小羊肖恩<br>Home Sheep Home", counts:0, xxxx:"home"},
-		{name:"我的世界<br>Minecraft", counts:0, xxxx:"mine"},
-		{name:"虚实之间<br>SYNTHETIK", counts:0, xxxx:"synt"},
-		{name:"无人深空<br>No Man's Sky", counts:0, xxxx:"nmsk"},
-		{name:"绝地求生<br>PUBG:BATTLEGROUND", counts:0, xxxx:"pubg"},
-		{name:"异星探险<br>ASTRONEER", counts:0, xxxx:"astr"},
-		{name:"幸福工厂<br>Satisfactory", counts:0, xxxx:"sati"},
-		{name:"堡垒之夜<br>Fortnite", counts:0, xxxx:"fort"},
-		{name:"王国重生<br>Kingdoms Rebron", counts:0, xxxx:"king"},
-		{name:"潜行者γ<br>S.T.A.L.K.E.R. GAMMA", counts:0, xxxx:"gamm"},
-		{name:"灰区战争<br>GRAY ZONE WARFARE", counts:0, xxxx:"gray"},
-		{name:"战舰世界<br>World of Warships", counts:0, xxxx:"wows"},
-		{name:"坦克世界<br>World of Tanks", counts:0, xxxx:"wotk"}
-	];
-	this.oGameCount = this.oGame.length;
-	this.iTheMaxCount = 0;
-	this.iTheMaxIndex = "";
-	this.aTmp = new Array();
-	this.iRT = -1;
-	this.fRunTimes = performance.now();
+class PlayWhat {
+	static oGames = oGamesData;
+	static iLength = oGamesData.length;
+	static iTheMaxCount = 0;
+	static iTheMaxIndex = "";
+	static aTmp = new Array();
+	static iRT = -1;
+	static fRunTimes = performance.now();
 	
-
+	static iRound = 0;
+	static iInTM = 0;
+	static iInRMS = 0;
+	static iInDV = 0;
+	static iInMAD = 0;
+	static iInSD = 0;
+	static iInRT = 0;
+	
+	static init() {
 		if ($('#nu').val() == '' || $('#nu').val() < 1) {
-			this.iRound = (this.oGame.length * 10000);
+			this.iRound = (this.iLength * 10000);
 			$('#nu').val(this.iRound);
 		}
 		else {
@@ -68,7 +33,7 @@ function oPlayWhat() {
 		}
 		
 		if ($('#RMS_in').val() == '' || $('#RMS_in').val() < 1) {
-			this.iInRMS = this.iRound / this.oGame.length * 1.1;
+			this.iInRMS = this.iRound / this.iLength * 1.1;
 			$('#RMS_in').val(this.iInRMS);
 		}
 		else {
@@ -84,7 +49,7 @@ function oPlayWhat() {
 		}
 		
 		if ($('#MAD_in').val() == '' || $('#MAD_in').val() < 1) {
-			this.iInMAD = this.iRound / this.oGame.length;
+			this.iInMAD = this.iRound / this.iLength;
 			$('#MAD_in').val(this.iInMAD);
 
 		}
@@ -93,7 +58,7 @@ function oPlayWhat() {
 		}
 		
 		if ($('#SD_in').val() == '' || $('#SD_in').val() < 1) {
-			this.iInSD = this.iRound / this.oGame.length;
+			this.iInSD = this.iRound / this.iLength;
 			$('#SD_in').val(this.iInSD);
 		}
 		else {
@@ -107,36 +72,37 @@ function oPlayWhat() {
 		else {
 			this.iInRT = $('#RT_in').val();
 		}
+	}
 	
-	this.fRMS =	 function () {
+	static fRMS() {
 				var iii = 0;
 				this.aTmp.forEach((num) => {
 					iii += num * num;
 				});
-				iii = math.sqrt(iii / (this.oGameCount));
+				iii = math.sqrt(iii / (this.iLength));
 				return iii;
 	}
 	
-	this.fOutput = function () {
-		this.oGame.sort(function(a, b){return b.counts - a.counts});
+	static fOutput() {
+		this.oGames.sort(function(a, b){return b.counts - a.counts});
 		
 		$("#tb2").empty();
-		for (var k = 0; k < this.oGameCount; k = k + 1) {
+		for (var k = 0; k < this.iLength; k = k + 1) {
 			$("#tb2").append("<tr><td><img alt=\"" +
-			this.oGame[k].xxxx + "\" src=\"img/" +
-			this.oGame[k].xxxx + ".png\"></img></td><td><h1>" +
-			this.oGame[k].name + "</h1></td><td><h2></h2></td></tr>");
+			this.oGames[k].xxxx + "\" src=\"img/" +
+			this.oGames[k].xxxx + ".png\"></img></td><td><h1>" +
+			this.oGames[k].name + "</h1></td><td><h2></h2></td></tr>");
 		}
 		
 		$('#tb2 tr').css("background-color", 'lightgrey');
 	
-		for (var j = 0; j < this.oGameCount; j = j + 1) {
-			if(this.oGame[j].counts > this.iTheMaxCount) {
-				this.iTheMaxCount = this.oGame[j].counts;
+		for (var j = 0; j < this.iLength; j = j + 1) {
+			if(this.oGames[j].counts > this.iTheMaxCount) {
+				this.iTheMaxCount = this.oGames[j].counts;
 				this.iTheMaxIndex = j;
 			}
 
-			$($("#tb2 h2")[j]).html(this.oGame[j].counts);
+			$($("#tb2 h2")[j]).html(this.oGames[j].counts);
 			$('#tb2 td:nth-child(2)').css("width", '30em');
 		}
 		
@@ -164,13 +130,13 @@ function oPlayWhat() {
 		return 0;
 	}
 	
-	this.fSTD = function () {
+	static fSTD() {
 		// Empty Array
-		for (var ii = 0; ii < this.oGameCount; ii++) {this.aTmp[ii] = 0;}
+		for (var ii = 0; ii < this.iLength; ii++) {this.aTmp[ii] = 0;}
 		do {
 			// Random
 			for (var i = 0; i < this.iRound; i++) {
-				this.aTmp[Math.floor(Math.random() * this.oGameCount)] += 1;
+				this.aTmp[Math.floor(Math.random() * this.iLength)] += 1;
 
 				if(performance.now() - this.fRunTimes > this.iInTM){break;}
 			}
@@ -184,8 +150,8 @@ function oPlayWhat() {
 			math.std(this.aTmp) > this.iInSD
 		)
 		
-		for (var r = 0; r < this.oGameCount; r = r + 1) {
-			this.oGame[r].counts = this.aTmp[r];
+		for (var r = 0; r < this.iLength; r = r + 1) {
+			this.oGames[r].counts = this.aTmp[r];
 		}
 		
 		$('#RT_data').html(this.iRT);
@@ -193,7 +159,9 @@ function oPlayWhat() {
 		return 0;
 	}
 	
-	this.fStart = function () {
+	static fStart() {
+		this.init();
+		this.fRunTimes = performance.now();
 		this.fSTD();
 		this.fOutput();
 		
@@ -202,3 +170,32 @@ function oPlayWhat() {
 		return 0;
 	}
 }
+
+document.getElementById("go").focus();
+
+$('#go, #up').on('click', function (){
+	contentUpdate();
+});
+
+$('input').on('input', function() {
+	$(this).val($(this).val().replaceAll(/\D+/gi,''));
+	if ($(this).val() == '' || $(this).val() < 1) {
+		$(this).val(1);
+	}
+});
+
+$('#nu').on('blur change', function() {
+	if ($('#au')[0].checked) {
+		contentUpdate();
+	}
+});
+
+function contentUpdate() {
+	PlayWhat.fStart();
+	$('#RMS_in').val(PlayWhat.iRound / PlayWhat.iLength * 1.1);
+	$('#DV_in').val(PlayWhat.iRound);
+	$('#MAD_in').val(PlayWhat.iRound / PlayWhat.iLength);
+	$('#SD_in').val(PlayWhat.iRound / PlayWhat.iLength);
+}
+
+contentUpdate();
