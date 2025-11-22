@@ -177,6 +177,10 @@ $('#go, #up').on('click', function (){
 	contentUpdate();
 });
 
+$('#up').on('click', function (){
+	limitsUpdate();
+});
+
 $('input').on('input', function() {
 	$(this).val($(this).val().replaceAll(/\D+/gi,''));
 	if ($(this).val() == '' || $(this).val() < 1) {
@@ -187,15 +191,38 @@ $('input').on('input', function() {
 $('#nu').on('blur change', function() {
 	if ($('#au')[0].checked) {
 		contentUpdate();
+		limitsUpdate();
 	}
 });
 
 function contentUpdate() {
 	PlayWhat.fStart();
+	resetData();
+}
+
+function limitsUpdate() {
 	$('#RMS_in').val(PlayWhat.iRound / PlayWhat.iLength * 1.1);
 	$('#DV_in').val(PlayWhat.iRound);
 	$('#MAD_in').val(PlayWhat.iRound / PlayWhat.iLength);
 	$('#SD_in').val(PlayWhat.iRound / PlayWhat.iLength);
+}
+
+function resetData() {
+	PlayWhat.oGames = oGamesData;
+	PlayWhat.iLength = oGamesData.length;
+	PlayWhat.iTheMaxCount = 0;
+	PlayWhat.iTheMaxIndex = "";
+	PlayWhat.aTmp = new Array();
+	PlayWhat.iRT = -1;
+	PlayWhat.fRunTimes = performance.now();
+	
+	PlayWhat.iRound = 0;
+	PlayWhat.iInTM = 0;
+	PlayWhat.iInRMS = 0;
+	PlayWhat.iInDV = 0;
+	PlayWhat.iInMAD = 0;
+	PlayWhat.iInSD = 0;
+	PlayWhat.iInRT = 0;
 }
 
 contentUpdate();

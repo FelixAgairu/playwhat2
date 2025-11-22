@@ -177,9 +177,13 @@ $('#go, #up').on('click', function (){
 	contentUpdate();
 });
 
+$('#up').on('click', function (){
+	limitsUpdate();
+});
+
 $('input').on('input', function() {
 	$(this).val($(this).val().replaceAll(/\D+/gi,''));
-	if ($(this).val() == '' || $('#nu').val() < 1) {
+	if ($(this).val() == '' || $(this).val() < 1) {
 		$(this).val(1);
 	}
 });
@@ -187,15 +191,38 @@ $('input').on('input', function() {
 $('#nu').on('blur change', function() {
 	if ($('#au')[0].checked) {
 		contentUpdate();
+		limitsUpdate();
 	}
 });
 
 function contentUpdate() {
 	PlayWhat.fStart();
+	resetData();
+}
+
+function limitsUpdate() {
 	$('#RMS_in').val(PlayWhat.iRound / PlayWhat.iLength * 1.1);
 	$('#DV_in').val(PlayWhat.iRound);
 	$('#MAD_in').val(PlayWhat.iRound / PlayWhat.iLength);
 	$('#SD_in').val(PlayWhat.iRound / PlayWhat.iLength);
+}
+
+function resetData() {
+	oGames = oGamesData;
+	iLength = oGamesData.length;
+	iTheMaxCount = 0;
+	iTheMaxIndex = "";
+	aTmp = new Array();
+	iRT = -1;
+	fRunTimes = performance.now();
+	
+	iRound = 0;
+	iInTM = 0;
+	iInRMS = 0;
+	iInDV = 0;
+	iInMAD = 0;
+	iInSD = 0;
+	iInRT = 0;
 }
 
 contentUpdate();
